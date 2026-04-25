@@ -10,3 +10,13 @@ PACKAGES
 
 1. Express JS
 2. CORS
+3. Mongoose
+4.
+
+### DATA BASE
+
+MongoDB
+
+### METHODS
+
+MVC
