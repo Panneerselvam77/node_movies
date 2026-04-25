@@ -6,22 +6,23 @@ import {
   moviesInfo,
   updateMovie,
 } from "./movies.controllers.js";
+import authMiddleware from "../../middleware/auth.middleware.js";
 
 const router = express.Router();
 // CRUD operations for movies
 
 // Create a new movie
-router.post("/movies", createMovie);
+router.post("/movies", authMiddleware, createMovie);
 
 // Read all movies
 router.get("/allmovies", moviesInfo);
 
 // Get a movie by ID
-router.get("/movies/:id", getMovieById);
+router.get("/movies/:id", authMiddleware, getMovieById);
 // Update a movie by ID
-router.put("/movies/:id", updateMovie);
+router.put("/movies/:id", authMiddleware, updateMovie);
 
 // Delete a movie by ID
-router.delete("/movies/:id", deleteMovie);
+router.delete("/movies/:id", authMiddleware, deleteMovie);
 
 export default router;

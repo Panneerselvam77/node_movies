@@ -1,5 +1,6 @@
 import express from "express";
 import moviesRouter from "./modules/movies/movies.route.js";
+import authRouter from "./modules/auth/auth.routes.js";
 import connectDB from "./config/db.js";
 import dotenv from "dotenv";
 
@@ -13,5 +14,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/", moviesRouter);
+app.use("/api/auth", authRouter);
 
 export default app;
