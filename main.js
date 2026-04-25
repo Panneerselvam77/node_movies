@@ -8,6 +8,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 6969;
 
+app.use(express.json());
 connectDB();
 
 app.get("/", (req, res) => {
