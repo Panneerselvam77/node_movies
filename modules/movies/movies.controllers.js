@@ -1,5 +1,4 @@
-import express from "express";
-import Movie from "../models/movies.models.js";
+import Movie from "./movies.models.js";
 
 export const moviesInfo = async (req, res) => {
   try {
@@ -44,19 +43,23 @@ export const getMovieById = async (req, res) => {
 
 export const updateMovie = async (req, res) => {
   try {
-    const findMovie = await Movie.findByIdAndUpdate({ _id: req.params.id });
+    const updatedMovie = await Movie.findByIdAndUpdate(
+      req.params.id,
+      {
+        title: req.body.title,
+        description: req.body.description,
+      },
+      { new: true, runValidators: true },
+    );
 
-    if (!findMovie) {
+    if (!updatedMovie) {
       return res.status(404).json({ message: "Movie not found!" });
     }
 
-    findMovie.title = req.body.title || findMovie.title;
-    findMovie.description = req.body.description || findMovie.description;
-    const updatedMovie = await findMovie.save();
-
-    return res
-      .status(200)
-      .json({ message: "Movie updated successfully!", movie: updatedMovie });
+    return res.status(200).json({
+      message: "Movie updated successfully!",
+      movie: updatedMovie,
+    });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
@@ -64,7 +67,12 @@ export const updateMovie = async (req, res) => {
 
 export const deleteMovie = async (req, res) => {
   try {
-    await Movie.findByIdAndDelete(req.params.id);
+    const deleted = await Movie.findByIdAndDelete(req.params.id);
+
+    if (!deleted) {
+      return res.status(404).json({ message: "Movie not found!" });
+    }
+
     return res.status(200).json({ message: "Movie deleted successfully!" });
   } catch (error) {
     return res.status(500).json({ error: error.message });

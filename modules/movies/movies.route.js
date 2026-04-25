@@ -5,7 +5,7 @@ import {
   getMovieById,
   moviesInfo,
   updateMovie,
-} from "../controllers/movies.controllers.js";
+} from "./movies.controllers.js";
 
 const router = express.Router();
 // CRUD operations for movies
